@@ -523,7 +523,7 @@ function topKps() {
 }
 routes.analysis = () => {
   const kps = topKps(); const qs = QB.questions;
-  const mods = MODULES.map(m => ({ m, n: qs.filter(q => q.module === m).length }));
+  const mods = MODULES.map(m => ({ m, n: qs.filter(q => q.module === m).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n);
   const years = [...new Set(qs.map(q => q.year))].sort();
   const yc = {}; qs.forEach(q => { yc[q.year] = yc[q.year] || {}; yc[q.year][q.module] = (yc[q.year][q.module] || 0) + 1; });
   const ytot = y => Object.values(yc[y]).reduce((a, b) => a + b, 0);
